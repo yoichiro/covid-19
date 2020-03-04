@@ -1,0 +1,7 @@
+indexes:
+- kind: prefectures
+  properties:
+  - name: link
+    direction: asc
+  - name: prefecture
+    direction: asc
