@@ -5,11 +5,22 @@ import * as moment from 'moment';
 const app = dialogflow();
 const database = new Database();
 
-app.intent('Default Welcome Intent', conv => {
-  conv.ask(
-    '厚生労働省が発表した新型コロナウイルスの国内での事例数をお知らせいたします。' +
-    'チャーター便帰国者は含まれていません。知りたい都道府県名をどうぞ。'
-  );
+app.intent('Default Welcome Intent', async (conv) => {
+  const link = await database.fetchLatestLink();
+  if (link) {
+    const total = await database.fetchTotal(link);
+    if (total) {
+      const date = createDatePhrase(convertDate(link.date), moment());
+      conv.ask(
+        '厚生労働省が発表した新型コロナウイルスの国内での事例数をお知らせいたします。' +
+        'チャーター便帰国者は含まれていません。' +
+        `${date}時点での、国内を居住地とする事例数は、${total}件です。` +
+        '知りたい都道府県名をどうぞ。'
+      );
+      return;
+    }
+  }
+  conv.close('申し訳ございません。情報がありません。');
 });
 
 const convertDate = (date: number): moment.Moment => {

@@ -114,4 +114,15 @@ export class Database {
     }
   }
 
+  async fetchTotal(link: Link): Promise<number | undefined> {
+    const query = datastore.createQuery('totals')
+      .filter('link', '=', link.name!);
+    const [entities] = await datastore.runQuery(query);
+    if (entities && entities.length > 0) {
+      return entities[0].total;
+    } else {
+      return undefined;
+    }
+  }
+
 }
