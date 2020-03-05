@@ -63,16 +63,19 @@ export class Crawler {
           trs.forEach((tr, i) => {
             if (i !== 0) {
               const tds = tr.querySelectorAll('td');
-              rows.push({
-                no: tds[0].textContent!.trim(),
-                oldNo: tds[1].textContent!.trim(),
-                fixedDate: tds[2].textContent!.trim(),
-                age: tds[3].textContent!.trim(),
-                gender: tds[4].textContent!.trim(),
-                prefecture: tds[5].textContent!.trim(),
-                effective: tds[6].textContent!.trim(),
-                status: tds[7].textContent!.trim()
-              });
+              const prefecture = tds[5].textContent!.trim();
+              if (!prefecture.startsWith('中国')) {
+                rows.push({
+                  no: tds[0].textContent!.trim(),
+                  oldNo: tds[1].textContent!.trim(),
+                  fixedDate: tds[2].textContent!.trim(),
+                  age: tds[3].textContent!.trim(),
+                  gender: tds[4].textContent!.trim(),
+                  prefecture,
+                  effective: tds[6].textContent!.trim(),
+                  status: tds[7].textContent!.trim()
+                });
+              }
             }
           });
           resolve(rows);
