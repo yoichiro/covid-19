@@ -21,11 +21,23 @@ const convertDate = (date: number): moment.Moment => {
   });
 };
 
+export const createDatePhrase = (date: moment.Moment, today: moment.Moment): string => {
+  if (today.year() !== date.year()) {
+    return date.format('YYYY年M月D日');
+  } else {
+    if (today.isSame(date, 'date')) {
+      return '本日' + date.format('M月D日');
+    } else {
+      return date.format('M月D日');
+    }
+  }
+};
+
 app.intent('prefecture', async (conv, { prefecture }) => {
   if (prefecture) {
     const link = await database.fetchLatestLink();
     if (link) {
-      const date = convertDate(link.date).format('YYYY年M月D日');
+      const date = createDatePhrase(convertDate(link.date), moment());
       const people = await database.fetchPrefecturePeople(link, String(prefecture));
       if (people) {
         conv.ask(

@@ -10,9 +10,10 @@
     "clean": "rm -rf lib",
     "lint": "eslint 'src/**/*.ts'",
     "build": "yarn lint && yarn clean && tsc",
+    "test": "yarn build && ava --verbose",
     "set-project": "gcloud config set project covid-19-6096b",
-    "deploy-crawl": "yarn build && yarn set-project && gcloud functions deploy crawl --runtime nodejs10 --trigger-topic crawl",
-    "deploy-fulfillment": "yarn build && yarn set-project && gcloud functions deploy fulfillment --runtime nodejs10 --trigger-http",
+    "deploy-crawl": "yarn test && yarn set-project && gcloud functions deploy crawl --runtime nodejs10 --trigger-topic crawl",
+    "deploy-fulfillment": "yarn test && yarn set-project && gcloud functions deploy fulfillment --runtime nodejs10 --trigger-http",
     "create-index": "yarn set-project && gcloud datastore indexes create ./index.yaml"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "@types/request": "^2.48.4",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
+    "ava": "1.4.1",
     "eslint": "^6.8.0",
     "typescript": "^3.8.3"
   }
