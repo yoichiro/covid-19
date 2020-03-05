@@ -8,7 +8,7 @@ exports.crawl = async (_pubSubEvent: any, _context: any): Promise<void> => {
   const crawlResult = await crawler.crawl();
   if (crawlResult) {
     const database = new Database();
-    await database.store(crawlResult.link, crawlResult.prefectureMap);
+    await database.store(crawlResult.link, crawlResult.details, crawlResult.prefectureMap);
   }
 };
 

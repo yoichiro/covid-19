@@ -6,11 +6,12 @@ const datastore = new Datastore();
 
 export class Database {
 
-  async store(link: Link, prefectureMap: { [key: string]: Detail[] }): Promise<void> {
+  async store(link: Link, details: Detail[], prefectureMap: { [key: string]: Detail[] }): Promise<void> {
     const linkEntity = await this.fetchLinkEntity(link);
     if (!linkEntity) {
       const linkKeyHash = await this.createLinkEntity(link);
       await this.createPrefectures(linkKeyHash, prefectureMap);
+      await this.createTotal(linkKeyHash, details);
     }
   }
 
@@ -67,6 +68,21 @@ export class Database {
       ];
       await datastore.insert({ key, data });
     }
+  }
+
+  async createTotal(linkKeyHash: string, details: Detail[]): Promise<void> {
+    const key = datastore.key('totals');
+    const data: { name: string, value: any }[] = [
+      {
+        name: 'link',
+        value: linkKeyHash
+      },
+      {
+        name: 'total',
+        value: details.length
+      }
+    ];
+    await datastore.insert({ key, data });
   }
 
   async fetchLatestLink(): Promise<Link | undefined> {

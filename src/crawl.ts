@@ -8,6 +8,7 @@ const PAGE_TITLE_PREFIX = '新型コロナウイルス感染症の現在の状�
 
 export type CrawlResult = {
   link: Link;
+  details: Detail[];
   prefectureMap: { [key: string]: Detail[] };
 };
 
@@ -105,10 +106,11 @@ export class Crawler {
       return undefined;
     }
     const link = this.getLatestLink(links);
-    const rows = await this.crawlDetailPage(link);
-    const prefectureMap = this.divideByPrefecture(rows);
+    const details = await this.crawlDetailPage(link);
+    const prefectureMap = this.divideByPrefecture(details);
     return {
       link,
+      details,
       prefectureMap
     };
   }
