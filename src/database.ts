@@ -6,11 +6,12 @@ const datastore = new Datastore();
 
 export class Database {
 
-  async store(link: Link, prefectureMap: { [key: string]: Detail[] }): Promise<void> {
+  async store(link: Link, details: Detail[], prefectureMap: { [key: string]: Detail[] }): Promise<void> {
     const linkEntity = await this.fetchLinkEntity(link);
     if (!linkEntity) {
       const linkKeyHash = await this.createLinkEntity(link);
       await this.createPrefectures(linkKeyHash, prefectureMap);
+      await this.createTotal(linkKeyHash, details);
     }
   }
 
@@ -69,6 +70,21 @@ export class Database {
     }
   }
 
+  async createTotal(linkKeyHash: string, details: Detail[]): Promise<void> {
+    const key = datastore.key('totals');
+    const data: { name: string, value: any }[] = [
+      {
+        name: 'link',
+        value: linkKeyHash
+      },
+      {
+        name: 'total',
+        value: details.length
+      }
+    ];
+    await datastore.insert({ key, data });
+  }
+
   async fetchLatestLink(): Promise<Link | undefined> {
     const query = datastore.createQuery('links')
       .order('date', { descending: true })
@@ -93,6 +109,17 @@ export class Database {
     const [entities] = await datastore.runQuery(query);
     if (entities && entities.length > 0) {
       return entities[0].people;
+    } else {
+      return undefined;
+    }
+  }
+
+  async fetchTotal(link: Link): Promise<number | undefined> {
+    const query = datastore.createQuery('totals')
+      .filter('link', '=', link.name!);
+    const [entities] = await datastore.runQuery(query);
+    if (entities && entities.length > 0) {
+      return entities[0].total;
     } else {
       return undefined;
     }
