@@ -7,7 +7,7 @@ const database = new Database();
 
 app.intent('Default Welcome Intent', conv => {
   conv.ask(
-    '厚生労働省が発表した新型コロナウイルスの国内での発生状況をお知らせいたします。' +
+    '厚生労働省が発表した新型コロナウイルスの国内での事例数をお知らせいたします。' +
     'チャーター便帰国者は含まれていません。知りたい都道府県名をどうぞ。'
   );
 });
@@ -41,12 +41,12 @@ app.intent('prefecture', async (conv, { prefecture }) => {
       const people = await database.fetchPrefecturePeople(link, String(prefecture));
       if (people) {
         conv.ask(
-          `${date}時点での${prefecture}の報告数は、${people}名です。` +
+          `${date}時点での、居住地が${prefecture}の事例数は、${people}件です。` +
             '他に知りたい都道府県名をどうぞ。'
         );
       } else {
         conv.ask(
-          `${date}時点での${prefecture}の報告数はありません。` +
+          `${date}時点での、居住地が${prefecture}の事例数はありません。` +
           '他に知りたい都道府県名をどうぞ。'
         );
       }
@@ -60,10 +60,10 @@ app.intent('prefecture', async (conv, { prefecture }) => {
 
 app.intent('help', conv => {
   conv.ask(
-    'これは、厚生労働省が発表した国内の都道府県別の新型コロナウイルス感染者数をお伝えするアクションです。' +
+    'これは、厚生労働省が発表した居住地別の新型コロナウイルスの事例数をお伝えするアクションです。' +
     '厚生労働省のホームページで公開された報告数に基づいています。' +
     'チャーター便帰国者は含まれていません。' +
-    '報告数を知りたい都道府県名をどうぞ。'
+    '事例数を知りたい都道府県名をどうぞ。'
   );
 });
 
