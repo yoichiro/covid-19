@@ -11,10 +11,17 @@
     "lint": "eslint 'src/**/*.ts'",
     "build": "yarn lint && yarn clean && tsc",
     "test": "yarn build && ava --verbose",
-    "set-project": "gcloud config set project covid-19-6096b",
-    "deploy-crawl": "yarn test && yarn set-project && gcloud functions deploy crawl --runtime nodejs10 --trigger-topic crawl",
-    "deploy-fulfillment": "yarn test && yarn set-project && gcloud functions deploy fulfillment --runtime nodejs10 --trigger-http",
-    "create-index": "yarn set-project && gcloud datastore indexes create ./index.yaml"
+    "set-project-production": "gcloud config set project covid-19-6096b",
+    "deploy-crawl-production": "yarn test && yarn set-project-production && gcloud functions deploy crawl --runtime nodejs10 --trigger-topic crawl",
+    "deploy-fulfillment-production": "yarn test && yarn set-project-production && gcloud functions deploy fulfillment --runtime nodejs10 --trigger-http",
+    "create-index-production": "yarn set-project-production && gcloud datastore indexes create ./index.yaml",
+    "set-project-staging": "gcloud config set project staging-covid-19",
+    "deploy-crawl-staging": "yarn test && yarn set-project-staging && gcloud functions deploy crawl --runtime nodejs10 --trigger-topic crawl",
+    "deploy-fulfillment-staging": "yarn test && yarn set-project-staging && gcloud functions deploy fulfillment --runtime nodejs10 --trigger-http",
+    "create-index-staging": "yarn set-project-staging && gcloud datastore indexes create ./index.yaml",
+    "deploy-crawl": "yarn deploy-crawl-staging",
+    "deploy-fulfillment": "yarn deploy-fulfillment-staging",
+    "create-index": "yarn create-index-staging"
   },
   "dependencies": {
     "@google-cloud/datastore": "^5.0.6",
