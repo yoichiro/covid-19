@@ -1,0 +1,15 @@
+{
+  "WELCOME_MESSAGE_SPEECH_1": "<speak>This action provides you the count of reports about the new coronavirus in Japan published by Ministry of Health, Labour and Welfare.  \nThe count of reports doesn't include the target people who have returned to Japan by charter flights.<break time=\"1s\" />  \nThere are %s cases as target carriers of coronavirus who live in Japan by %s.</speak>",
+  "WELCOME_MESSAGE_TEXT_1": "This action provides you the count of reports about the new coronavirus in Japan published by Ministry of Health, Labour and Welfare.",
+  "WELCOME_MESSAGE_BASIC_CARD_TITLE": "Coronavirus cases in Japan: %s",
+  "WELCOME_MESSAGE_BASIC_CARD_SUBTITLE": "by %s",
+  "WELCOME_MESSAGE_BASIC_CARD_TEXT": "Published by Ministry of Health, Labour and Welfare. (The count of reports doesn't include the target people who have returned to Japan by charter flights.)  \nThe target persons are who live in Japan.",
+  "WELCOME_MESSAGE_BASIC_CARD_BUTTON": "Ministry of Health, Labour and Welfare website.",
+  "WELCOME_MESSAGE_SPEECH_2": "This action provides you the count of reports about the new coronavirus in Japan published by Ministry of Health, Labour and Welfare. The count of reports doesn't include the target people who have returned to Japan by charter flights. There are %s cases as target carriers who live in Japan by %s.",
+  "END_MESSAGE_1": "Be sure to take general measures against infectious diseases, such as wearing a mask and thoroughly washing your hands.",
+  "END_MESSAGE_2": "For more information, please visit the Ministry of Health, Labor and Welfare website. Thank you.",
+  "WELCOME_MESSAGE_NO_INFORMATION": "Sorry, there is no information.",
+  "DATE_FORMAT_1": "MMMM Do in YYYY",
+  "DATE_FORMAT_2": "MMMM Do",
+  "TODAY": "Today"
+}
